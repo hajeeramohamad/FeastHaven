@@ -1,5 +1,6 @@
 FeastHaven/target/
 FeastHavenUI/dist/
 adminpanel/dist/
+/node_modules/
 **/node_modules/
 *.env
