@@ -9,13 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FoodResponse {
+public class UserRequest {
 
-    private String id;
     private String name;
-    private String description;
-    private String imageUrl;
-    private double price;
-    private String category;
-    private String imageBase64;
+    private String email;
+    private String password;
 }

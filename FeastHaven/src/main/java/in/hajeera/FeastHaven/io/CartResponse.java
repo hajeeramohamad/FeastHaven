@@ -3,19 +3,22 @@ package in.hajeera.FeastHaven.io;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FoodResponse {
+public class CartResponse {
 
     private String id;
-    private String name;
-    private String description;
-    private String imageUrl;
-    private double price;
-    private String category;
-    private String imageBase64;
+    private String userId;
+    private Map<String,Integer> items = new HashMap<>();
+
+
+
 }
