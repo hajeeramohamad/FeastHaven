@@ -3,8 +3,9 @@ import { StoreContext } from '../../context/StoreContext'
 import FoodItem from '../FoodItem/FoodItem';
 
 const FoodDisplay = ({category,searchText}) => {
-
-  const {foodList} = useContext(StoreContext);
+  const { foodList } = useContext(StoreContext);
+  // Fallback to empty array if foodList is not yet loaded or is malformed
+  const foods = Array.isArray(foodList) ? foodList : [];
   const trimmedSearchText = searchText.trim().toLowerCase();
   const filteredFoods = foodList.filter(
     (food) =>

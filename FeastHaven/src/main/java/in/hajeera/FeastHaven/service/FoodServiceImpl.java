@@ -18,6 +18,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -75,6 +76,15 @@ public class FoodServiceImpl implements FoodService{
         FoodEntity newFoodEntity = convertToEntity(request);
         String imageUrl = uploadFile((file));
         newFoodEntity.setImageUrl(imageUrl);
+        // Save image data since we are mocking
+        if (isDummyCredentials(accessKey, secretKey)) {
+            try {
+                newFoodEntity.setImageData(file.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
         newFoodEntity= foodRepository.save(newFoodEntity);
         return convertToResponse(newFoodEntity);
     }
@@ -128,13 +138,21 @@ public class FoodServiceImpl implements FoodService{
     }
 
     private FoodResponse convertToResponse(FoodEntity entity){
+
+        String base64Image = null;
+
+        if (isDummyCredentials(accessKey, secretKey) && entity.getImageData() != null) {
+            base64Image = "data:image/jpeg;base64," +
+                    Base64.getEncoder().encodeToString(entity.getImageData());
+        }
         return FoodResponse.builder()
                 .id(entity.getId())
                 .name(entity.getName())
                 .description(entity.getDescription())
                 .category(entity.getCategory())
                 .price(entity.getPrice())
-                .imageUrl(entity.getImageUrl())
+                .imageUrl(entity.getImageUrl()) // Use URL only
+                .imageBase64(base64Image)
                 .build();
     }
 }

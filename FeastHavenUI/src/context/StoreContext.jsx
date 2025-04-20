@@ -76,6 +76,7 @@ export const StoreContextprovider = (props) => {
 
     const loadData = async () => {
       const data = await fetchFoodList();
+      console.log("Food List fetched:", data);
       setFoodList(data);
     };
 

@@ -7,7 +7,9 @@ const Orders = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/api/orders/all");
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/orders/all`
+      );
       setData(response.data);
     } catch (error) {
       console.error("Failed to fetch orders:", error);
@@ -17,7 +19,7 @@ const Orders = () => {
   const updateStatus = async (event, orderId) => {
     try {
       const response = await axios.patch(
-        `http://localhost:8080/api/orders/status/${orderId}?status=${event.target.value}`
+        `${process.env.REACT_APP_API_URL}/api/orders/status/${orderId}?status=${event.target.value}`
       );
       if (response.status === 200) {
         await fetchOrders();
